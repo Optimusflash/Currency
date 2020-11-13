@@ -14,7 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        buildConfigField "String", "BASE_URL_PRIVAT_BANK", "\"https://api.privatbank.ua/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -1,31 +1,33 @@
 package com.optimus.currency.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.optimus.currency.R
+import com.optimus.currency.databinding.ActivityMainBinding
 import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
-import com.optimus.currency.ui.privatbank.viewmodel.PrivatBankViewModel
+import com.optimus.currency.ui.nbu.fragments.NBUFragment
+import com.optimus.currency.ui.privatbank.fragments.PrivatBankFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: PrivatBankViewModel
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
+    private lateinit var viewModel: SharedViewModel
+    private lateinit var mainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mainBinding.root)
 
         initDaggerComponent()
         initViewModel()
-        initViews()
+        if(savedInstanceState==null){
+            attachFragments()
+        }
         setObservers()
 
     }
@@ -35,19 +37,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(PrivatBankViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SharedViewModel::class.java)
     }
 
-    private fun initViews() {
-
+    private fun attachFragments() {
+        val privatBankFragment = PrivatBankFragment()
+        val nbuFragment = NBUFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.pb_container, privatBankFragment)
+            .replace(R.id.nbu_container,nbuFragment)
+            .commit()
     }
 
     private fun setObservers() {
-        viewModel.currencies.observe(this, Observer {
-            val log = it.map { cur ->
-                cur.currency
-            }
-            Log.e("M_MainActivity", log.toString())
-        })
+
     }
 }

@@ -11,10 +11,7 @@ data class PrivatBankResponse(
 )
 
 data class PrivatBankCurrency(
-    val baseCurrency: String,
-    val currency: String,
-    val saleRateNB: Float?,
-    val purchaseRateNB: Float?,
+    val currency: String?,
     val saleRate : Float?,
     val purchaseRate : Float?
 )

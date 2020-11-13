@@ -11,6 +11,6 @@ interface PrivatBankApiService {
     @GET("p24api/exchange_rates")
     suspend fun getCurrencies(
         @Query("json") json: String? = "",
-        @Query("date") date: String = "01.11.2020"
+        @Query("date") date: String = "13.11.2020"   //TODO delete default value
     ) : PrivatBankResponse
 }

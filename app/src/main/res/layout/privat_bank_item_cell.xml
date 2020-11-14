@@ -10,7 +10,7 @@
         android:id="@+id/tv_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/global_spacing_16"
+        android:layout_marginTop="@dimen/global_spacing_12"
         android:textSize="@dimen/text_size_24"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/purchase_rate_pb"
-        android:layout_width="@dimen/tv_width_80"
+        android:layout_width="@dimen/tv_width_81"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
         android:textSize="@dimen/text_size_24"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/sale_rate_pb"
-        android:layout_width="@dimen/tv_width_80"
+        android:layout_width="@dimen/tv_width_81"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
         android:textSize="@dimen/text_size_24"

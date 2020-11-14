@@ -7,4 +7,6 @@
     <string name="Currency">Валюта</string>
     <string name="Purchase">Покупка</string>
     <string name="Sale">Продажа</string>
+    <string name="value_alpha_code">1%s</string>
+    <string name="currency_UAH_format">%sUAH</string>
 </resources>

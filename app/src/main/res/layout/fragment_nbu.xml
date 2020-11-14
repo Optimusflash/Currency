@@ -11,7 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/global_spacing_16"
-        android:layout_marginTop="@dimen/global_spacing_16"
+        android:layout_marginTop="@dimen/global_spacing_8"
+        android:textSize="@dimen/text_size_20"
+        android:textStyle="bold"
         android:text="@string/NBU"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,13 +22,25 @@
         android:id="@+id/_date_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/global_spacing_16"
+        android:layout_marginTop="@dimen/global_spacing_8"
         android:layout_marginEnd="@dimen/global_spacing_16"
         android:drawablePadding="@dimen/global_spacing_4"
+        android:textSize="@dimen/text_size_20"
+        android:textColor="@color/color_olive"
         android:gravity="center_vertical"
         app:drawableStartCompat="@drawable/ic_baseline_date_range_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="13.11.2020" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/nbu_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/global_spacing_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nbu_title"
+        tools:listitem="@layout/nbu_bank_item_cell" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

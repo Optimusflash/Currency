@@ -7,7 +7,7 @@
     android:paddingVertical="4dp">
 
     <TextView
-        android:id="@+id/tv_currency"
+        android:id="@+id/tv_nbu_currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/global_spacing_16"
@@ -19,7 +19,7 @@
         tools:text="Доллар США" />
 
     <TextView
-        android:id="@+id/purchase_rate_pb"
+        android:id="@+id/tv_rate_nbu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/global_spacing_16"
@@ -31,14 +31,14 @@
         tools:text="26.31 UAH" />
 
     <TextView
-        android:id="@+id/sale_rate_pb"
+        android:id="@+id/tv_nbu_alpha_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
         android:textSize="@dimen/text_size_16"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/purchase_rate_pb"
-        app:layout_constraintTop_toBottomOf="@+id/purchase_rate_pb"
+        app:layout_constraintEnd_toEndOf="@+id/tv_rate_nbu"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rate_nbu"
         tools:text="1 USD" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

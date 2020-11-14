@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -15,10 +16,11 @@ import javax.inject.Singleton
  */
 
 @Module
-class RemoteModule {
+class PrivatBankRemoteModule {
 
     @Provides
     @Singleton
+    @Named("PbInterceptor")
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -27,7 +29,8 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    @Named("PbOkHttpClient")
+    fun provideOkHttpClient(@Named("PbInterceptor") loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
@@ -35,7 +38,8 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit {
+    @Named("PbRetrofit")
+    fun provideRetrofit(@Named("PbOkHttpClient") client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL_PRIVAT_BANK)
             .addConverterFactory(GsonConverterFactory.create())
@@ -45,7 +49,9 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun providePrivatBankApiService(retrofit: Retrofit): PrivatBankApiService{
+    @Named("PbApi")
+    fun providePrivatBankApiService(@Named("PbRetrofit") retrofit: Retrofit): PrivatBankApiService{
         return retrofit.create(PrivatBankApiService::class.java)
     }
 }
+

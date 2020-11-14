@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.optimus.currency.data.model.NBUCurrency
 import com.optimus.currency.data.repositories.NBURepository
 import com.optimus.currency.extensions.formatDate
+import com.optimus.currency.utils.SingleLiveEvent
 import java.util.*
 import javax.inject.Inject
 
@@ -17,8 +18,8 @@ class NBUViewModel @Inject constructor(private val repository: NBURepository) : 
     val currenciesNBU: LiveData<List<NBUCurrency>>
         get() = _currenciesNBU
 
-    private var _currencyPositionIndex: MutableLiveData<Int> = MutableLiveData()
-    val currencyPositionIndex: LiveData<Int>
+    private var _currencyPositionIndex = SingleLiveEvent<Int>()
+    val currencyPositionIndex: SingleLiveEvent<Int>
         get() = _currencyPositionIndex
 
     private val _calendarDate = MutableLiveData<String>()

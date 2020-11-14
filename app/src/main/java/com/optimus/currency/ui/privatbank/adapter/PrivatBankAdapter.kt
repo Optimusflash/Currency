@@ -8,10 +8,10 @@ import com.optimus.currency.ui.privatbank.viewholders.PrivatBankViewHolder
 /**
  * Created by Dmitriy Chebotar on 13.11.2020.
  */
-class PrivatBankAdapter: RecyclerView.Adapter<PrivatBankViewHolder>() {
+class PrivatBankAdapter(private val onItemClick: (String?) -> Unit): RecyclerView.Adapter<PrivatBankViewHolder>() {
     private val currencyItems: MutableList<PrivatBankCurrency> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PrivatBankViewHolder.create(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PrivatBankViewHolder.create(parent,onItemClick)
 
     override fun onBindViewHolder(holder: PrivatBankViewHolder, position: Int) {
         holder.bind(currencyItems[position])

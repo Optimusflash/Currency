@@ -1,6 +1,7 @@
 package com.optimus.currency.ui.nbu.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
 import com.optimus.currency.extensions.formatDate
 import com.optimus.currency.ui.DatePickerFragment
+import com.optimus.currency.ui.SharedViewModel
 import com.optimus.currency.ui.nbu.adapter.NBUAdapter
 import com.optimus.currency.ui.nbu.viewmodel.NBUViewModel
 import javax.inject.Inject
@@ -23,6 +25,7 @@ class NBUFragment : Fragment(),DatePickerFragment.OnDateSetListener {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: NBUViewModel
     private lateinit var fragmentNbuBinding: FragmentNbuBinding
+    private lateinit var sharedViewModel: SharedViewModel
 
     private val nbuAdapter by lazy { NBUAdapter() }
 
@@ -52,6 +55,7 @@ class NBUFragment : Fragment(),DatePickerFragment.OnDateSetListener {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(NBUViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(SharedViewModel::class.java)
     }
 
     private fun initViews() {
@@ -70,6 +74,17 @@ class NBUFragment : Fragment(),DatePickerFragment.OnDateSetListener {
 
         viewModel.calendarDate.observe(viewLifecycleOwner, {
             fragmentNbuBinding.tvNbuDatePicker.text = it.formatDate()
+        })
+
+        sharedViewModel.clickedCurrencyCode.observe(viewLifecycleOwner, {
+            Log.e("M_NBUFragment", "clickedCurrencyCode $it")
+            viewModel.handleClick(it)
+        })
+
+        viewModel.currencyPositionIndex.observe(viewLifecycleOwner, {
+            Log.e("M_NBUFragment", "$it")
+            if (it == null || it == -1)  return@observe
+            fragmentNbuBinding.nbuRecyclerView.smoothScrollToPosition(it)
         })
     }
 

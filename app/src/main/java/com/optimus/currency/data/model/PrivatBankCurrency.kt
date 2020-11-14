@@ -21,6 +21,6 @@ data class PrivatBankCurrency(
 data class NBUCurrency(
     @SerializedName("txt") val currencyUkrName: String?,
     @SerializedName("rate") val rate: Float?,
-    @SerializedName("cc") val alphaName: String?,
+    @SerializedName("cc") val alphaName: String,
     @SerializedName("exchangedate") val date: String?
 )

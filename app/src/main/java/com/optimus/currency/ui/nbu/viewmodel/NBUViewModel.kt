@@ -17,6 +17,10 @@ class NBUViewModel @Inject constructor(private val repository: NBURepository) : 
     val currenciesNBU: LiveData<List<NBUCurrency>>
         get() = _currenciesNBU
 
+    private var _currencyPositionIndex: MutableLiveData<Int> = MutableLiveData()
+    val currencyPositionIndex: LiveData<Int>
+        get() = _currencyPositionIndex
+
     private val _calendarDate = MutableLiveData<String>()
     val calendarDate: LiveData<String>
         get() = _calendarDate
@@ -36,5 +40,13 @@ class NBUViewModel @Inject constructor(private val repository: NBURepository) : 
 
     fun handleDate(dateInMills: Long) {
         _calendarDate.value = dateInMills.formatDate("yyyyMMdd")
+    }
+
+    fun handleClick(currencyCode: String) {
+        val nbuCurrencies = _currenciesNBU.value
+        val nbuCurrency = nbuCurrencies?.firstOrNull {
+            it.alphaName.startsWith(currencyCode)
+        }
+        _currencyPositionIndex.value = nbuCurrencies?.indexOf(nbuCurrency)
     }
 }

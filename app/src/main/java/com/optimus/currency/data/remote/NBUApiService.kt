@@ -11,6 +11,6 @@ interface NBUApiService {
     @GET("NBUStatService/v1/statdirectory/exchangenew")
     suspend fun getCurrencies(
         @Query("json") json: String? = "",
-        @Query("date") date: String = "20201114"   //TODO delete default value
+        @Query("date") date: String
     ) : List<NBUCurrency>
 }

@@ -19,11 +19,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/_date_picker"
+        android:id="@+id/tv_nbu_date_picker"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/tv_height_48"
         android:layout_marginEnd="@dimen/global_spacing_16"
-        android:drawablePadding="@dimen/global_spacing_4"
+        android:drawablePadding="@dimen/global_spacing_8"
         android:gravity="center_vertical"
         android:textColor="@color/color_olive"
         android:textSize="@dimen/text_size_20"

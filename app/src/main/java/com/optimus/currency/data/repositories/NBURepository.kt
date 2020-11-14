@@ -12,9 +12,9 @@ import javax.inject.Named
  */
 class NBURepository @Inject constructor(@Named("NBUApi") private val nbuApi: NBUApiService) {
 
-    suspend fun loadCurrenciesFromApi(): List<NBUCurrency> {
+    suspend fun loadCurrenciesFromApi(date: String): List<NBUCurrency> {
         return withContext(Dispatchers.IO) {
-            nbuApi.getCurrencies()
+            nbuApi.getCurrencies(date = date)
         }
     }
 }

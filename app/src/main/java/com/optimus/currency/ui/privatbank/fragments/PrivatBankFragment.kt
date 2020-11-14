@@ -1,9 +1,7 @@
 package com.optimus.currency.ui.privatbank.fragments
 
 
-import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,28 +11,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.optimus.currency.databinding.FragmentPrivatBankBinding
 import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
+import com.optimus.currency.ui.DatePickerFragment
 import com.optimus.currency.ui.privatbank.adapter.PrivatBankAdapter
-import com.optimus.currency.ui.SharedViewModel
 import com.optimus.currency.ui.privatbank.viewmodel.PrivateBankViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 
-class PrivatBankFragment : Fragment() {
-    private lateinit var fragmentPrivatBankBinding: FragmentPrivatBankBinding
-    private lateinit var calendar: Calendar
+class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: PrivateBankViewModel
+    private lateinit var fragmentPrivatBankBinding: FragmentPrivatBankBinding
+    //private var calendar: Calendar = Calendar.getInstance(Locale.getDefault())
     private val pbAdapter by lazy {
         PrivatBankAdapter()
     }
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         fragmentPrivatBankBinding = FragmentPrivatBankBinding.inflate(inflater, container, false)
         return fragmentPrivatBankBinding.root
@@ -64,42 +60,28 @@ class PrivatBankFragment : Fragment() {
     }
 
     private fun initViews() {
-        fragmentPrivatBankBinding.pbRecyclerview.layoutManager =
-            LinearLayoutManager(requireContext())
+
+        fragmentPrivatBankBinding.pbRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         fragmentPrivatBankBinding.pbRecyclerview.adapter = pbAdapter
-
-        calendar = Calendar.getInstance(Locale.getDefault())
-        updateLabel()
-
-        val date = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, day)
-            updateLabel()
-        }
-        val dialog = DatePickerDialog(
-            requireContext(),
-            date,
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
+        val datePickerFragment = DatePickerFragment.newInstance(this)
 
         fragmentPrivatBankBinding.tvPbDatePicker.setOnClickListener {
-            dialog.show()
+            datePickerFragment.show(childFragmentManager, "PB picker") //TODO
         }
+
     }
 
     private fun setObservers() {
         viewModel.currencies.observe(viewLifecycleOwner, {
             pbAdapter.updateData(it)
         })
+        viewModel.calendarDate.observe(viewLifecycleOwner, {
+            fragmentPrivatBankBinding.tvPbDatePicker.text = it
+        })
     }
 
-    private fun updateLabel() {
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        fragmentPrivatBankBinding.tvPbDatePicker.text = dateFormat.format(calendar.time)
+    override fun onDateSet(dateInMillis: Long) {
+        viewModel.handleDate(dateInMillis)
     }
-
 
 }

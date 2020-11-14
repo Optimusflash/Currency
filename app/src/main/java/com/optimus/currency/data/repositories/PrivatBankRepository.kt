@@ -12,9 +12,9 @@ import javax.inject.Named
  */
 class PrivatBankRepository @Inject constructor(@Named("PbApi")private val privatBankApi: PrivatBankApiService) {
 
-    suspend fun loadCurrenciesFromApi(): PrivatBankResponse{
-        return withContext(Dispatchers.IO){
-            privatBankApi.getCurrencies()
+    suspend fun loadCurrenciesFromApi(date: String): PrivatBankResponse {
+        return withContext(Dispatchers.IO) {
+            privatBankApi.getCurrencies(date = date)
         }
     }
 }

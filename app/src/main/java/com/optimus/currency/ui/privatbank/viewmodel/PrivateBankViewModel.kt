@@ -1,12 +1,10 @@
 package com.optimus.currency.ui.privatbank.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.optimus.currency.data.model.PrivatBankCurrency
 import com.optimus.currency.data.repositories.PrivatBankRepository
-import kotlinx.coroutines.launch
+import com.optimus.currency.extensions.formatDate
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -19,14 +17,19 @@ class PrivateBankViewModel @Inject constructor(private val privatBankRepository:
     val currencies: LiveData<List<PrivatBankCurrency>>
         get() = _currencies
 
+    private val _calendarDate = MutableLiveData<String>()
+    val calendarDate: LiveData<String>
+        get() = _calendarDate
+
     init {
+        Calendar.getInstance().formatDate().apply {_calendarDate.value = this}
         getCurrencies()
     }
 
     private fun getCurrencies() {
-        viewModelScope.launch {
-            _currencies = liveData {
-                val exchangeRateList = privatBankRepository.loadCurrenciesFromApi().exchangeRate
+        _currencies = Transformations.switchMap(_calendarDate) {
+            liveData {
+                val exchangeRateList = privatBankRepository.loadCurrenciesFromApi(it).exchangeRate
                 emit(filterIncorrectData(exchangeRateList))
             }
         }
@@ -36,5 +39,9 @@ class PrivateBankViewModel @Inject constructor(private val privatBankRepository:
         return exchangeRateList.filterNot {
             it.currency == null || it.purchaseRate == null || it.saleRate == null
         }
+    }
+
+    fun handleDate(dateInMills: Long) {
+        _calendarDate.value = dateInMills.formatDate()
     }
 }

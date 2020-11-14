@@ -1,5 +1,6 @@
 package com.optimus.currency
 
+import com.optimus.currency.extensions.formatDate
 import com.optimus.currency.extensions.toDecimalFormat
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -24,5 +25,11 @@ class ExampleUnitTest {
         println(a.toDecimalFormat())
         println(b.toDecimalFormat())
         println(c.toDecimalFormat())
+    }
+
+    @Test
+    fun test_date_format() {
+        val date = "20201114"
+        println(date .formatDate())
     }
 }

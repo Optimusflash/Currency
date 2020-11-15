@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Currency">
         <activity android:name=".ui.privatbank.chart.ChartActivity"
-            android:parentActivityName=".ui.privatbank.main.MainActivity">
+            android:parentActivityName="com.optimus.currency.ui.main.MainActivity">
 
         </activity>
-        <activity android:name=".ui.privatbank.main.MainActivity"
+        <activity android:name="com.optimus.currency.ui.main.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

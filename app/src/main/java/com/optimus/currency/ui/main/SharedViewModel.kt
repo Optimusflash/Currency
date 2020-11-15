@@ -1,4 +1,4 @@
-package com.optimus.currency.ui.privatbank.main
+package com.optimus.currency.ui.main
 
 import androidx.lifecycle.ViewModel
 import com.optimus.currency.utils.SingleLiveEvent

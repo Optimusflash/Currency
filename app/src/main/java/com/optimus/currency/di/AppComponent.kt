@@ -3,7 +3,7 @@ package com.optimus.currency.di
 import com.optimus.currency.di.modules.NBURemoteModule
 import com.optimus.currency.di.modules.PrivatBankRemoteModule
 import com.optimus.currency.di.modules.ViewModelModule
-import com.optimus.currency.ui.privatbank.main.MainActivity
+import com.optimus.currency.ui.main.MainActivity
 import com.optimus.currency.ui.nbu.fragments.NBUFragment
 import com.optimus.currency.ui.privatbank.fragments.PrivatBankFragment
 import dagger.Component

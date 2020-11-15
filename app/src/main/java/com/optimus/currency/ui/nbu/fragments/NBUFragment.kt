@@ -14,7 +14,7 @@ import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
 import com.optimus.currency.extensions.formatDate
 import com.optimus.currency.ui.privatbank.dialog.DatePickerFragment
-import com.optimus.currency.ui.privatbank.main.SharedViewModel
+import com.optimus.currency.ui.main.SharedViewModel
 import com.optimus.currency.ui.nbu.adapter.NBUAdapter
 import com.optimus.currency.ui.nbu.viewmodel.NBUViewModel
 import com.optimus.currency.utils.Resource
@@ -72,7 +72,7 @@ class NBUFragment : Fragment(), DatePickerFragment.OnDateSetListener {
     }
 
     private fun setObservers() {
-        viewModel.currenciesNBU.observe(viewLifecycleOwner, {resource ->
+        viewModel.currenciesNBU.observe(viewLifecycleOwner, { resource->
             when (resource){
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE

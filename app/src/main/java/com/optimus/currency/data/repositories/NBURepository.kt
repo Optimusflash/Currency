@@ -1,6 +1,5 @@
 package com.optimus.currency.data.repositories
 
-import android.util.Log
 import com.optimus.currency.data.model.NBUCurrency
 import com.optimus.currency.data.remote.NBUApiService
 import com.optimus.currency.utils.Resource
@@ -17,7 +16,7 @@ class NBURepository @Inject constructor(
     @Named("NBUApi") private val nbuApi: NBUApiService,
     @Named("NBUResponseHandler") private val responseHandler: ResponseHandler
 ) {
-    var nbuItems: List<NBUCurrency>? = null
+    var nbuItems: Resource<List<NBUCurrency>>? = null
 
     suspend fun loadCurrenciesFromApi(date: String): Resource<List<NBUCurrency>> {
         return withContext(Dispatchers.IO) {

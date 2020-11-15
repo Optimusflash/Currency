@@ -14,7 +14,7 @@ import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
 import com.optimus.currency.ui.privatbank.adapter.PrivatBankAdapter
 import com.optimus.currency.ui.privatbank.dialog.DatePickerFragment
-import com.optimus.currency.ui.privatbank.main.SharedViewModel
+import com.optimus.currency.ui.main.SharedViewModel
 import com.optimus.currency.ui.privatbank.viewmodel.PrivateBankViewModel
 import com.optimus.currency.utils.Resource
 import javax.inject.Inject

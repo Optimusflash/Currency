@@ -1,4 +1,4 @@
-package com.optimus.currency.ui.privatbank.main
+package com.optimus.currency.ui.main
 
 import android.os.Bundle
 import android.view.Menu

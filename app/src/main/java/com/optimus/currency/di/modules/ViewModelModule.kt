@@ -2,7 +2,7 @@ package com.optimus.currency.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.optimus.currency.di.ViewModelKey
-import com.optimus.currency.ui.privatbank.main.SharedViewModel
+import com.optimus.currency.ui.main.SharedViewModel
 import com.optimus.currency.ui.nbu.viewmodel.NBUViewModel
 import com.optimus.currency.ui.privatbank.viewmodel.PrivateBankViewModel
 import dagger.Binds

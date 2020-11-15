@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class NBUViewModel @Inject constructor(private val repository: NBURepository) : ViewModel() {
 
-    private var _currenciesNBU = MutableLiveData<Resource<List<NBUCurrency>>>()
+    private val _currenciesNBU = MutableLiveData<Resource<List<NBUCurrency>>>()
     val currenciesNBU: LiveData<Resource<List<NBUCurrency>>>
         get() = _currenciesNBU
 
@@ -40,7 +40,7 @@ class NBUViewModel @Inject constructor(private val repository: NBURepository) : 
         viewModelScope.launch {
             _currenciesNBU.value = Resource.Loading()
             val currencies = repository.loadCurrenciesFromApi(_calendarDate.value ?: return@launch)
-            repository.nbuItems = currencies.data
+            repository.nbuItems = currencies
             _currenciesNBU.value = currencies
         }
     }
@@ -52,18 +52,20 @@ class NBUViewModel @Inject constructor(private val repository: NBURepository) : 
 
     fun handleClick(currencyCode: String) {
         val nbuCurrencies = repository.nbuItems
-        val nbuCurrency = nbuCurrencies?.firstOrNull {
+        val nbuCurrency = nbuCurrencies?.data?.firstOrNull {
             it.alphaName == currencyCode
         }
-        val index = nbuCurrencies?.indexOf(nbuCurrency)
+        val index = nbuCurrencies?.data?.indexOf(nbuCurrency)
         if (index == -1) return
+
         updateSelectedItem(nbuCurrencies, index)
-        _currenciesNBU.value?.data = repository.nbuItems
+
+        _currenciesNBU.value = repository.nbuItems
         _currencyPositionIndex.value = index
     }
 
-    private fun updateSelectedItem(nbuCurrencies: List<NBUCurrency>?, selectCurrencyIndex: Int?) {
-        nbuCurrencies?.forEachIndexed { index, nbuCurrency ->
+    private fun updateSelectedItem(nbuCurrencies: Resource<List<NBUCurrency>>?, selectCurrencyIndex: Int?) {
+        nbuCurrencies?.data?.forEachIndexed { index, nbuCurrency ->
             nbuCurrency.isSelected = selectCurrencyIndex == index
         }
         repository.nbuItems = nbuCurrencies

@@ -1,8 +1,5 @@
-package com.optimus.currency.ui
+package com.optimus.currency.ui.privatbank.main
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.optimus.currency.utils.SingleLiveEvent
 import javax.inject.Inject
@@ -16,7 +13,6 @@ class SharedViewModel @Inject constructor() : ViewModel() {
         get() = _clickedCurrencyCode
 
     fun handleCurrencyClick(currencyCode: String?) {
-        Log.e("M_SharedViewModel", "handleCurrencyClick $currencyCode")
         currencyCode ?: return
         _clickedCurrencyCode.value = currencyCode
     }

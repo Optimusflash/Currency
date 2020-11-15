@@ -1,10 +1,7 @@
 package com.optimus.currency.ui.nbu.viewholders
 
-import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.optimus.currency.R
 import com.optimus.currency.data.model.NBUCurrency

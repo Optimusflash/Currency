@@ -1,4 +1,4 @@
-package com.optimus.currency.ui
+package com.optimus.currency.ui.privatbank.dialog
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -25,7 +25,9 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        return DatePickerDialog(requireContext(), this, year, month, day)
+        return DatePickerDialog(requireContext(), this, year, month, day).apply {
+            datePicker.maxDate = Calendar.getInstance().timeInMillis
+        }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {

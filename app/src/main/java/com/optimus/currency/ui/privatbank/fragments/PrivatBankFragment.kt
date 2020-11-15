@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.optimus.currency.databinding.FragmentPrivatBankBinding
 import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
-import com.optimus.currency.ui.DatePickerFragment
-import com.optimus.currency.ui.SharedViewModel
 import com.optimus.currency.ui.privatbank.adapter.PrivatBankAdapter
+import com.optimus.currency.ui.privatbank.dialog.DatePickerFragment
+import com.optimus.currency.ui.privatbank.main.SharedViewModel
 import com.optimus.currency.ui.privatbank.viewmodel.PrivateBankViewModel
+import com.optimus.currency.utils.Resource
 import javax.inject.Inject
 
 
@@ -24,7 +25,7 @@ class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: PrivateBankViewModel
     private lateinit var sharedViewModel: SharedViewModel
-    private lateinit var fragmentPrivatBankBinding: FragmentPrivatBankBinding
+    private lateinit var binding: FragmentPrivatBankBinding
     private val pbAdapter by lazy {
         PrivatBankAdapter ( sharedViewModel::handleCurrencyClick )
     }
@@ -33,8 +34,8 @@ class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        fragmentPrivatBankBinding = FragmentPrivatBankBinding.inflate(inflater, container, false)
-        return fragmentPrivatBankBinding.root
+        binding = FragmentPrivatBankBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,22 +61,41 @@ class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
 
     private fun initViews() {
 
-        fragmentPrivatBankBinding.pbRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        fragmentPrivatBankBinding.pbRecyclerview.adapter = pbAdapter
+        binding.pbRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.pbRecyclerview.adapter = pbAdapter
         val datePickerFragment = DatePickerFragment.newInstance(this)
 
-        fragmentPrivatBankBinding.tvPbDatePicker.setOnClickListener {
-            datePickerFragment.show(childFragmentManager, "PB picker") //TODO
+        binding.tvPbDatePicker.setOnClickListener {
+            datePickerFragment.show(childFragmentManager, "PB picker")
         }
 
     }
 
     private fun setObservers() {
-        viewModel.currencies.observe(viewLifecycleOwner, {
-            pbAdapter.updateData(it)
+        viewModel.currencies.observe(viewLifecycleOwner, { resources ->
+            when(resources){
+                is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.pbRecyclerview.visibility = View.VISIBLE
+                    resources.data?.let {
+                        if (it.isEmpty()) showToast("Empty data. Choose another date")
+                        pbAdapter.updateData(it)
+                    } ?: showToast("Empty data")
+                }
+                is Resource.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.pbRecyclerview.visibility = View.GONE
+                }
+                is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.pbRecyclerview.visibility = View.GONE
+                    showToast(resources.message)
+                }
+            }
         })
+
         viewModel.calendarDate.observe(viewLifecycleOwner, {
-            fragmentPrivatBankBinding.tvPbDatePicker.text = it
+            binding.tvPbDatePicker.text = it
         })
     }
 
@@ -83,4 +103,8 @@ class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
         viewModel.handleDate(dateInMillis)
     }
 
+    private fun showToast(message: String?) {
+        message ?: return
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
 }

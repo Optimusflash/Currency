@@ -2,7 +2,7 @@ package com.optimus.currency.di.modules
 
 import com.optimus.currency.BuildConfig
 import com.optimus.currency.data.remote.NBUApiService
-import com.optimus.currency.data.remote.PrivatBankApiService
+import com.optimus.currency.utils.ResponseHandler
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -54,4 +54,9 @@ class NBURemoteModule {
     fun provideNbuApiService(@Named("NBURetrofit") retrofit: Retrofit): NBUApiService {
         return retrofit.create(NBUApiService::class.java)
     }
+
+    @Provides
+    @Named("NBUResponseHandler")
+    fun provideResponseHandler() = ResponseHandler()
+
 }

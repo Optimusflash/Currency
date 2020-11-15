@@ -2,6 +2,7 @@ package com.optimus.currency.di.modules
 
 import com.optimus.currency.BuildConfig
 import com.optimus.currency.data.remote.PrivatBankApiService
+import com.optimus.currency.utils.ResponseHandler
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -53,5 +54,10 @@ class PrivatBankRemoteModule {
     fun providePrivatBankApiService(@Named("PbRetrofit") retrofit: Retrofit): PrivatBankApiService{
         return retrofit.create(PrivatBankApiService::class.java)
     }
+
+    @Provides
+    @Named("PbResponseHandler")
+    fun provideResponseHandler() = ResponseHandler()
+
 }
 

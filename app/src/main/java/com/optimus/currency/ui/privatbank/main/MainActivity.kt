@@ -1,10 +1,8 @@
-package com.optimus.currency.ui
+package com.optimus.currency.ui.privatbank.main
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.optimus.currency.R
@@ -12,6 +10,7 @@ import com.optimus.currency.databinding.ActivityMainBinding
 import com.optimus.currency.di.Injector
 import com.optimus.currency.di.ViewModelFactory
 import com.optimus.currency.ui.nbu.fragments.NBUFragment
+import com.optimus.currency.ui.privatbank.chart.ChartActivity
 import com.optimus.currency.ui.privatbank.fragments.PrivatBankFragment
 import javax.inject.Inject
 
@@ -63,8 +62,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.graph){
-            Toast.makeText(this, "menu clicked", Toast.LENGTH_SHORT).show()
+        if (item.itemId == R.id.graph) {
+            val intent = ChartActivity.newIntent(this)
+            startActivity(intent)
             return true
         }
         return super.onOptionsItemSelected(item)

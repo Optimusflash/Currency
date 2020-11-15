@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.optimus.currency.data.model.PrivatBankCurrency
 import com.optimus.currency.data.repositories.PrivatBankRepository
 import com.optimus.currency.extensions.formatDate
+import com.optimus.currency.utils.Resource
 import java.util.*
 import javax.inject.Inject
 
@@ -13,8 +14,8 @@ import javax.inject.Inject
 class PrivateBankViewModel @Inject constructor(private val privatBankRepository: PrivatBankRepository) :
     ViewModel() {
 
-    private lateinit var _currencies: LiveData<List<PrivatBankCurrency>>
-    val currencies: LiveData<List<PrivatBankCurrency>>
+    private lateinit var _currencies: LiveData<Resource<List<PrivatBankCurrency>>>
+    val currencies: LiveData<Resource<List<PrivatBankCurrency>>>
         get() = _currencies
 
     private val _calendarDate = MutableLiveData<String>()
@@ -22,23 +23,27 @@ class PrivateBankViewModel @Inject constructor(private val privatBankRepository:
         get() = _calendarDate
 
     init {
-        Calendar.getInstance().formatDate().apply {_calendarDate.value = this}
+        Calendar.getInstance().formatDate().apply { _calendarDate.value = this }
         getCurrencies()
     }
 
     private fun getCurrencies() {
         _currencies = Transformations.switchMap(_calendarDate) {
             liveData {
-                val exchangeRateList = privatBankRepository.loadCurrenciesFromApi(it).exchangeRate
+                emit(Resource.Loading())
+                val exchangeRateList = privatBankRepository.loadCurrenciesFromApi(it)
                 emit(filterIncorrectData(exchangeRateList))
             }
         }
     }
 
-    private fun filterIncorrectData(exchangeRateList: List<PrivatBankCurrency>): List<PrivatBankCurrency> {
-        return exchangeRateList.filterNot {
+    private fun filterIncorrectData(exchangeRateList: Resource<List<PrivatBankCurrency>>): Resource<List<PrivatBankCurrency>>? {
+        val data = exchangeRateList.data
+        val list = data?.filterNot {
             it.currency == null || it.purchaseRate == null || it.saleRate == null
         }
+        list?.find { it.currency == "PLZ" }?.currency = "PLN"
+        return Resource.Success(list)
     }
 
     fun handleDate(dateInMills: Long) {

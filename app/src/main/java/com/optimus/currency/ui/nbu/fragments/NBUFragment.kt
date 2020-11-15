@@ -63,9 +63,11 @@ class NBUFragment : Fragment(), DatePickerFragment.OnDateSetListener {
     private fun initViews() {
         binding.nbuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.nbuRecyclerView.adapter = nbuAdapter
+
         val datePickerFragment = DatePickerFragment.newInstance(this)
+
         binding.tvNbuDatePicker.setOnClickListener {
-            datePickerFragment.show(childFragmentManager, "NBU picker")  //TODO
+            datePickerFragment.show(childFragmentManager, datePickerFragment.tag)
         }
     }
 
@@ -78,7 +80,7 @@ class NBUFragment : Fragment(), DatePickerFragment.OnDateSetListener {
                     resource.data?.let {
                         if (it.isEmpty()) showToast("Empty data. Choose another date")
                         nbuAdapter.updateData(it)
-                    } ?: showToast("Empty data")
+                    }
                 }
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE

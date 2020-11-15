@@ -66,7 +66,7 @@ class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
         val datePickerFragment = DatePickerFragment.newInstance(this)
 
         binding.tvPbDatePicker.setOnClickListener {
-            datePickerFragment.show(childFragmentManager, "PB picker")
+            datePickerFragment.show(childFragmentManager, datePickerFragment.tag)
         }
 
     }
@@ -80,7 +80,7 @@ class PrivatBankFragment : Fragment(), DatePickerFragment.OnDateSetListener {
                     resources.data?.let {
                         if (it.isEmpty()) showToast("Empty data. Choose another date")
                         pbAdapter.updateData(it)
-                    } ?: showToast("Empty data")
+                    }
                 }
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE

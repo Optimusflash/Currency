@@ -1,5 +1,6 @@
 package com.optimus.currency.data.repositories
 
+import android.util.Log
 import com.optimus.currency.data.model.PrivatBankCurrency
 import com.optimus.currency.data.remote.PrivatBankApiService
 import com.optimus.currency.utils.Resource

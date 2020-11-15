@@ -24,5 +24,4 @@ class NBUAdapter : RecyclerView.Adapter<NBUViewHolder>() {
         currencyItems.addAll(items)
         notifyDataSetChanged()
     }
-
 }

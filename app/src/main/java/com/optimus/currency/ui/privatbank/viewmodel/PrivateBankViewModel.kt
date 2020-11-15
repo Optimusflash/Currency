@@ -42,6 +42,7 @@ class PrivateBankViewModel @Inject constructor(private val privatBankRepository:
         val list = data?.filterNot {
             it.currency == null || it.purchaseRate == null || it.saleRate == null
         }
+        //mismatch of the alpha code of the currency from the api of PrivatBank to the Polish zloty. Made the alpha code like in the NBU
         list?.find { it.currency == "PLZ" }?.currency = "PLN"
         return Resource.Success(list)
     }

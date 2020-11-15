@@ -5,6 +5,7 @@ import com.optimus.currency.data.model.NBUCurrency
 import com.optimus.currency.data.repositories.NBURepository
 import com.optimus.currency.extensions.formatDate
 import com.optimus.currency.utils.SingleLiveEvent
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -46,8 +47,25 @@ class NBUViewModel @Inject constructor(private val repository: NBURepository) : 
     fun handleClick(currencyCode: String) {
         val nbuCurrencies = _currenciesNBU.value
         val nbuCurrency = nbuCurrencies?.firstOrNull {
-            it.alphaName.startsWith(currencyCode)
+            it.alphaName.startsWith(currencyCode, true)
         }
-        _currencyPositionIndex.value = nbuCurrencies?.indexOf(nbuCurrency)
+        val index = nbuCurrencies?.indexOf(nbuCurrency)
+        if (index != -1){
+            setSelectedItem(nbuCurrencies, index)
+        }
+        _currencyPositionIndex.value = index
+    }
+
+    private fun setSelectedItem(nbuCurrencies: List<NBUCurrency>?, index: Int?){
+        if (nbuCurrencies == null || index == null) return
+        val selectedCurrency = nbuCurrencies.firstOrNull {
+            it.isSelected
+        }
+        if (selectedCurrency != null ){
+            selectedCurrency.isSelected = false
+            nbuCurrencies[index].isSelected = true
+        } else {
+            nbuCurrencies[index].isSelected = true
+        }
     }
 }

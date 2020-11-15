@@ -15,11 +15,7 @@ class NBUAdapter : RecyclerView.Adapter<NBUViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = NBUViewHolder.create(parent)
 
     override fun onBindViewHolder(holder: NBUViewHolder, position: Int) {
-        if (position % 2 == 1) {
-            holder.itemView.setBackgroundResource(R.color.color_green_light)
-        } else {
-            holder.itemView.setBackgroundResource(R.color.white)
-        }
+
             holder.bind(currencyItems[position])
     }
 

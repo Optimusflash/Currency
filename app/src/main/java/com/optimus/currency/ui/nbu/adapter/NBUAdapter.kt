@@ -16,7 +16,7 @@ class NBUAdapter : RecyclerView.Adapter<NBUViewHolder>() {
 
     override fun onBindViewHolder(holder: NBUViewHolder, position: Int) {
 
-            holder.bind(currencyItems[position])
+            holder.bind(currencyItems[position], position)
     }
 
     override fun getItemCount() = currencyItems.size

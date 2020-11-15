@@ -68,7 +68,11 @@ class NBUFragment : Fragment(),DatePickerFragment.OnDateSetListener {
     }
 
     private fun setObservers() {
-        viewModel.currenciesNBU.observe(viewLifecycleOwner, {
+//        viewModel.currenciesNBU.observe(viewLifecycleOwner, {
+//            nbuAdapter.updateData(it)
+//        })
+
+        viewModel.ldNbuItems.observe(viewLifecycleOwner, {
             nbuAdapter.updateData(it)
         })
 

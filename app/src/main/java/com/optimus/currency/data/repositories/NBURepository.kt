@@ -12,6 +12,8 @@ import javax.inject.Named
  */
 class NBURepository @Inject constructor(@Named("NBUApi") private val nbuApi: NBUApiService) {
 
+    var nbuItems: List<NBUCurrency>? = null
+
     suspend fun loadCurrenciesFromApi(date: String): List<NBUCurrency> {
         return withContext(Dispatchers.IO) {
             nbuApi.getCurrencies(date = date)

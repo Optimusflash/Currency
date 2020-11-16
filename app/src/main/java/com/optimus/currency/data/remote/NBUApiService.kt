@@ -9,9 +9,9 @@ import retrofit2.http.QueryName
  * Created by Dmitriy Chebotar on 13.11.2020.
  */
 interface NBUApiService {
-    @GET("NBUStatService/v1/statdirectory/exchangenew")
+    @GET("NBUStatService/v1/statdirectory/exchange")
     suspend fun getCurrencies(
-        @QueryName(encoded = true) json: String = "json",
-        @Query("date") date: String
+            @Query("date") date: String,
+            @QueryName(encoded = true) json: String = "json"
     ) : List<NBUCurrency>
 }

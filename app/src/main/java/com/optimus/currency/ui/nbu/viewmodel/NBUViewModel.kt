@@ -1,5 +1,6 @@
 package com.optimus.currency.ui.nbu.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
  * Created by Dmitriy Chebotar on 14.11.2020.
  */
 
-class NBUViewModel @Inject constructor(private val repository: NBURepository) : ViewModel() {
+class NBUViewModel @ViewModelInject constructor(private val repository: NBURepository) : ViewModel() {
 
     private val _currenciesNBU = MutableLiveData<Resource<List<NBUCurrency>>>()
     val currenciesNBU: LiveData<Resource<List<NBUCurrency>>>

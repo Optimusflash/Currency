@@ -5,6 +5,8 @@ import com.optimus.currency.data.remote.PrivatBankApiService
 import com.optimus.currency.utils.ResponseHandler
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,6 +19,7 @@ import javax.inject.Singleton
  */
 
 @Module
+@InstallIn(ApplicationComponent::class)
 class PrivatBankRemoteModule {
 
     @Provides

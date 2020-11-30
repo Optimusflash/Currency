@@ -1,5 +1,6 @@
 package com.optimus.currency.ui.privatbank.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.optimus.currency.data.model.PrivatBankCurrency
 import com.optimus.currency.data.repositories.PrivatBankRepository
@@ -11,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by Dmitriy Chebotar on 13.11.2020.
  */
-class PrivateBankViewModel @Inject constructor(private val privatBankRepository: PrivatBankRepository) :
+class PrivateBankViewModel @ViewModelInject constructor(private val privatBankRepository: PrivatBankRepository) :
     ViewModel() {
 
     private lateinit var _currencies: LiveData<Resource<List<PrivatBankCurrency>>>

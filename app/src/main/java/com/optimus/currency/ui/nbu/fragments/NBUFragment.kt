@@ -7,57 +7,41 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.optimus.currency.databinding.FragmentNbuBinding
-import com.optimus.currency.di.Injector
-import com.optimus.currency.di.ViewModelFactory
 import com.optimus.currency.extensions.formatDate
 import com.optimus.currency.ui.privatbank.dialog.DatePickerFragment
 import com.optimus.currency.ui.main.SharedViewModel
 import com.optimus.currency.ui.nbu.adapter.NBUAdapter
 import com.optimus.currency.ui.nbu.viewmodel.NBUViewModel
 import com.optimus.currency.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class NBUFragment : Fragment(), DatePickerFragment.OnDateSetListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var viewModel: NBUViewModel
+    private val viewModel: NBUViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentNbuBinding
-    private lateinit var sharedViewModel: SharedViewModel
 
     private val nbuAdapter by lazy { NBUAdapter() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initDaggerComponent()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentNbuBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
         initViews()
         setObservers()
-    }
-
-    private fun initDaggerComponent() {
-        Injector.getAppComponent().inject(this)
-    }
-
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(NBUViewModel::class.java)
-        sharedViewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(SharedViewModel::class.java)
     }
 
     private fun initViews() {
